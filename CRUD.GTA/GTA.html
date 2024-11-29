@@ -19,13 +19,11 @@
    <input type="button" value="Excluir" id="btExcluir" onclick="excluir()" style="display:none;">
    <br><br>
 
-   <label for="inputNome">Nome</label>
-   <input type="text" name="inputNome" id="inputNome">
-   <br>
+   
    <label for="inputAnoQSP">Ano que se passa</label>
    <input type="number" name="inputAnoQSP" id="inputAnoQSP"> 
    <br> 
-   <label for="inputDataLancamento">DataLancamento</label>
+   <label for="inputDataLancamento">Data de lançamento</label>
    <input type="date" name="inputDataLancamento" id="inputDataLancamento">
    <br>
    <label for="inputProtagonista">Protagonista</label>
@@ -48,8 +46,11 @@
 
    <div id="outputSaida" style="background-color: aqua;">...</div>
 
-   <script src="./GTA.js"></script>
-   <script src="./GTAControle.js"></script>
+   <input type="button" value="Salvar Dados" onclick="prepararESalvarCSV()">
+   <input type="button" value="Buscar Dados Salvos" onclick="abrirArquivoSalvoEmLocalPermanente()">
+
+   <script src="./gta.js"></script>
+   <script src="./gtacontrol.js"></script>
 </body>
 
   </html>
