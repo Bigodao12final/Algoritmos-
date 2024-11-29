@@ -158,7 +158,7 @@ function mostrarAviso(mensagem) {
     document.getElementById("divAviso").innerHTML = mensagem;
 }
 
-// Função para mostrar os dados do Carro nos campos
+// Função para mostrar os dados do GTA nos campos
 function mostrarDadosGta(gta) {
     document.getElementById("inputNome").value = gta.nome;
     document.getElementById("inputAnoQSP").value = gta.anoQSP;
@@ -212,7 +212,7 @@ function prepararESalvarCSV() { //gera um arquivo csv com as informações de li
      let textoCSV = "";
      for (let i = 0; i < listaGta.length; i++) {
          const linha = listaGta[i]; //variavel linha contem as informações de cada musica
-         textoCSV += linha.nome + ";" + //concatena os dados das musicas formatados para linha csv (separada por ;)
+         textoCSV += linha.nome + ";" + //concatena os dados dos GTAs formatados para linha csv (separada por ;)
              linha.anoQSP + ";" +
              linha.dataLancamento + ";" +
              linha.protagonista + ";" +
@@ -261,7 +261,7 @@ function prepararESalvarCSV() { //gera um arquivo csv com as informações de li
  }
  
  
- // Função para processar o arquivo CSV e transferir os dados para a listaMusica
+ // Função para processar o arquivo CSV e transferir os dados para a listaGta
  function converterDeCSVparaListaObjeto(arquivo) {
      const leitor = new FileReader();  //objeto que permite ler arquivos locais no navegador 
      leitor.onload = function (e) {
@@ -273,7 +273,7 @@ function prepararESalvarCSV() { //gera um arquivo csv com as informações de li
              if (linha) { //verifica se a linha não está vazia
                  const dados = linha.split(';'); // Separa os dados por ';'
                  if (dados.length === 6) { //verifica os seis campos
-                     // Adiciona os dados à listaMusica como um objeto
+                     // Adiciona os dados à listaGta como um objeto
                      listaGta.push({
                          nome: dados[0],
                          anoQSP: dados[1],
