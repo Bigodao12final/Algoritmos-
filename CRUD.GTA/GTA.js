@@ -1,13 +1,13 @@
-class Gta {
-    constructor(Nome, AnoQSP, dataLancamento, Protagonista, Antagonista, Cidade,  posicaoNaLista) {
-        this.Nome = Nome;
-        this.AnoQSP = AnoQSP;
+class GTA {
+    constructor(nome, anoQSP, dataLancamento, protagonista, antagonista, cidade, posicaoNaLista) {
+        this.nome = nome;
+        this.anoQSP = anoQSP;
         this.dataLancamento = dataLancamento;
-        this.Protagonista= Protagonista;
-        this.Antagonista = Antagonista;
-        this.Cidade= Cidade;
+        this.protagonista= protagonista;
+        this.antagonista = antagonista;
+        this.cidade= cidade;
 
 
-        this.posicaoNaLista = posicaoNaLista; //atributo para facilitar a alteração e exclusão 
+        this.posicaoNaLista = null; //atributo para facilitar a alteração e exclusão 
     }
 }
