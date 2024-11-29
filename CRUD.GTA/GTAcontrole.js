@@ -6,7 +6,7 @@ bloquearAtributos(true);
 function procurePorChavePrimaria(chave) {
     for (let i = 0; i < listaGta.length; i++) {
         const gta = listaGta[i];
-        if (gta.Nome == chave) {
+        if (gta.nome == chave) {
             gta.posicaoNaLista = i;
             return listaGta[i];
         }
@@ -16,15 +16,15 @@ function procurePorChavePrimaria(chave) {
 
 // Função para procurar um elemento pela chave primária   -------------------------------------------------------------
 function procure() {
-    const Nome = document.getElementById("inputPlaca").value;
-    if (placa) { // se digitou um Placa
-        gta = procurePorChavePrimaria(Nome);
+    const nome = document.getElementById("inputNome").value;
+    if (nome) { // se digitou um Nome
+        gta = procurePorChavePrimaria(nome);
         if (gta) { //achou na lista
             mostrarDadosGta(gta);
             visibilidadeDosBotoes('inline', 'none', 'inline', 'inline', 'none'); // Habilita botões de alterar e excluir
             mostrarAviso("Achou na lista, pode alterar ou excluir");
         } else { //não achou na lista
-            limparAtributos();
+            //limparAtributos();
             visibilidadeDosBotoes('inline', 'inline', 'none', 'none', 'none');
             mostrarAviso("Não achou na lista, pode inserir");
         }
@@ -70,35 +70,34 @@ function salvar() {
 
     // obter os dados a partir do html
 
-    let Nome;
+    let nome;
     if (gta == null) {
-        Nome = document.getElementById("inputNome").value;
+        nome = document.getElementById("inputNome").value;
     } else {
-        Nome = gta.placa;
+        nome = gta.nome;
     }
 
-    const Nome = document.getElementById("inputNome").value;
-    const AnoQSP = document.getElementById("inputAnoQSP").value;
+    const anoQSP = parseInt(document.getElementById("inputAnoQSP").value);
     const dataLancamento = document.getElementById("inputDataLancamento").value;
-    const Protagonista = document.getElementById("inputProtagonista").value;
-    const Antagonista = document.getElementById("inputAntagonista").value;
-    const Cidade = document.getElementById("inputCidade").value; 
+    const protagonista = document.getElementById("inputProtagonista").value;
+    const antagonista = document.getElementById("inputAntagonista").value;
+    const cidade = document.getElementById("inputCidade").value; 
 
-    if (AnoQSP<0) {
+    if (anoQSP<0) {
         mostrarAviso("O AnoQSP não pode ser menor que zero");
         return;
     }
 
     //verificar se o que foi digitado pelo USUÁRIO está correto
-    if (Nome && AnoQSP && dataLancamento && Protagonista && Antagonista && Cidade) {// se tudo certo 
+    if (nome && anoQSP && dataLancamento && protagonista && antagonista && cidade) {// se tudo certo 
         switch (oQueEstaFazendo) {
             case 'inserindo':
-                gta = new Gta(Nome, AnoQSP, dataLancamento, Protagonista, Antagonista, Cidade);
-                listaGta.push(carro);
+                gta = new GTA(nome, anoQSP, dataLancamento, protagonista, antagonista, cidade);
+                listaGta.push(gta);
                 mostrarAviso("Inserido na lista");
                 break;
             case 'alterando':
-                gtaAlterado = new Gta(Nome, AnoQSP, dataLancamento, Protagonista, Antagonista, Cidade);
+                gtaAlterado = new GTA(nome, anoQSP, dataLancamento, protagonista, antagonista, cidade);
                 listaGta[gta.posicaoNaLista] = gtaAlterado;
                 mostrarAviso("Alterado");
                 break;
@@ -109,7 +108,7 @@ function salvar() {
                         novaLista.push(listaGta[i]);
                     }
                 }
-                listaCarro = novaLista;
+                listaGta = novaLista;
                 mostrarAviso("EXCLUIDO");
                 break;
             default:
@@ -119,7 +118,7 @@ function salvar() {
         visibilidadeDosBotoes('inline', 'none', 'none', 'none', 'none');
         limparAtributos();
         listar();
-        document.getElementById("inputPlaca").focus();
+        document.getElementById("inputNome").focus();
     } else {
         alert("Erro nos dados digitados");
         return;
@@ -132,12 +131,12 @@ function preparaListagem(vetor) {
     for (let i = 0; i < vetor.length; i++) {
         const linha = vetor[i];
         texto +=
-            linha.Nome + " - " +
-            linha.AnoQSP + " - " +
+            linha.nome + " - " +
+            linha.anoQSP + " - " +
             linha.dataLancamento + " - " +
-            linha.Protagonista + " - " +
-            linha.Antagonista + " - " + 
-            linha.Cidade + "<br>";
+            linha.protagonista + " - " +
+            linha.antagonista + " - " + 
+            linha.cidade + "<br>";
     }
     return texto;
 }
@@ -149,7 +148,7 @@ function listar() {
 
 function cancelarOperacao() {
     limparAtributos();
-    bloquearAtributos(true);
+    //bloquearAtributos(true);
     visibilidadeDosBotoes('inline', 'none', 'none', 'none', 'none');
     mostrarAviso("Cancelou a operação de edição");
 }
@@ -160,13 +159,13 @@ function mostrarAviso(mensagem) {
 }
 
 // Função para mostrar os dados do Carro nos campos
-function mostrarDadosGta(GTA) {
-    document.getElementById("inputNome").value = GTA.Nome;
-    document.getElementById("inputAnoQSP").value = GTA.AnoQSP;
-    document.getElementById("inputDataLancamento").value = GTA.dataLancamento;
-    document.getElementById("inputProtagonista").value = GTA.Protagonista;
-    document.getElementById("inputAntagonista").value = GTA.Antagonista;
-    document.getElementById("inputCidade").value = GTA.Cidade;
+function mostrarDadosGta(gta) {
+    document.getElementById("inputNome").value = gta.nome;
+    document.getElementById("inputAnoQSP").value = gta.anoQSP;
+    document.getElementById("inputDataLancamento").value = gta.dataLancamento;
+    document.getElementById("inputProtagonista").value = gta.protagonista;
+    document.getElementById("inputAntagonista").value = gta.antagonista;
+    document.getElementById("inputCidade").value = gta.cidade;
 
     // Define os campos como readonly
     bloquearAtributos(true);
@@ -178,7 +177,7 @@ function limparAtributos() {
     document.getElementById("inputAnoQSP").value = "";
     document.getElementById("inputDataLancamento").value = "";
     document.getElementById("inputProtagonista").value = "";
-    document.getElementById("inputAntagonista ").value = "";
+    document.getElementById("inputAntagonista").value = "";
     document.getElementById("inputCidade").value = "";
 
     bloquearAtributos(true);
@@ -206,6 +205,88 @@ function visibilidadeDosBotoes(btProcure, btInserir, btAlterar, btExcluir, btSal
     document.getElementById("btExcluir").style.display = btExcluir;
     document.getElementById("btSalvar").style.display = btSalvar;
     document.getElementById("btCancelar").style.display = btSalvar; // o cancelar sempre aparece junto com o salvar
-    document.getElementById("inputPlaca").focus();
+    document.getElementById("inputNome").focus();
 }
-
+function prepararESalvarCSV() { //gera um arquivo csv com as informações de listaMusica vai enviar da memória RAM para dispositivo de armazenamento permanente.
+    let nomeDoArquivoDestino = "./gta.csv";  //define o nome do arquivo csv
+     let textoCSV = "";
+     for (let i = 0; i < listaGta.length; i++) {
+         const linha = listaGta[i]; //variavel linha contem as informações de cada musica
+         textoCSV += linha.nome + ";" + //concatena os dados das musicas formatados para linha csv (separada por ;)
+             linha.anoQSP + ";" +
+             linha.dataLancamento + ";" +
+             linha.protagonista + ";" +
+             linha.antagonista + ";" + 
+             linha.cidade + "\n";
+     }
+     persistirEmLocalPermanente(nomeDoArquivoDestino, textoCSV);
+ }
+ 
+ 
+ function persistirEmLocalPermanente(nomeArq, conteudo) {
+     /*cria um blob (objeto que representa dados de arquivo) que armazena "[conteudo]" como arquivo de texto,
+     criando um arquivo temporário*/
+     const blob = new Blob([conteudo], { type: 'text/plain' });
+     //cria o elemento "a" (link temporário) usado para adicionar o dowload do arquivo
+     const link = document.createElement('a'); /*cria uma URL temporária que aponta para o blob e
+     atribui ela ao href do link para que ele "aponte" para o arquivo gerado (permitindo seu download)*/
+     link.href = URL.createObjectURL(blob);
+     link.download = nomeArq; // Nome do arquivo de download
+     link.click(); //inicia o processo de dowload automaticamente
+     // Libera o objeto URL
+     URL.revokeObjectURL(link.href); //remove a URL temporária que foi criada (liberando a memória)
+ }
+ 
+ 
+ // Função para abrir o seletor de arquivos para upload (para processar o arquivo selecionado)
+ function abrirArquivoSalvoEmLocalPermanente() {
+     
+     const input = document.createElement('input');
+     //cria o elemento input do tipo file (serve para abrir o seletor de arquivos)
+     input.type = 'file';
+     input.accept = '.csv'; // Aceita apenas arquivos CSV do sistema local
+     input.onchange = function (event) {
+         /*associa uma função de evento ao onchange, que será chamada quando o usuário selecionar um arquivo
+         O evento change é disparado quando um arquivo é selecionado*/
+         const arquivo = event.target.files[0]; //acessa o arquivo selecionado e armazena na variavel arquivo
+         console.log(arquivo.name);
+         if (arquivo) {
+             converterDeCSVparaListaObjeto(arquivo);
+         }
+         /*verifica se um arquivo foi selecionado: 
+         se sim, chama a função processarArquivo e passa o arquivo selecionado como argumento
+         permitindo que o arquivo seja lido e processado na função processarArquivo*/
+     };
+     input.click(); //seletor de arquivos exibido automaticamente    
+ }
+ 
+ 
+ // Função para processar o arquivo CSV e transferir os dados para a listaMusica
+ function converterDeCSVparaListaObjeto(arquivo) {
+     const leitor = new FileReader();  //objeto que permite ler arquivos locais no navegador 
+     leitor.onload = function (e) {
+         const conteudo = e.target.result; // Conteúdo do arquivo CSV
+         const linhas = conteudo.split('\n'); // Separa o conteúdo por linha
+         listaGta = []; // Limpa a lista atual (se necessário)
+         for (let i = 0; i < linhas.length; i++) {
+             const linha = linhas[i].trim();  //linhas[i] representa cada linha do arquivo CSV
+             if (linha) { //verifica se a linha não está vazia
+                 const dados = linha.split(';'); // Separa os dados por ';'
+                 if (dados.length === 6) { //verifica os seis campos
+                     // Adiciona os dados à listaMusica como um objeto
+                     listaGta.push({
+                         nome: dados[0],
+                         anoQSP: dados[1],
+                         dataLancamento: dados[2],
+                         protagonista: dados[3],
+                         antagonista: dados[4],
+                         cidade: dados[5]
+                     });
+                 }
+             }
+         }
+         listar(); //exibe a lista atualizada
+     };
+     leitor.readAsText(arquivo); // Lê o arquivo como texto
+ }
+ 
